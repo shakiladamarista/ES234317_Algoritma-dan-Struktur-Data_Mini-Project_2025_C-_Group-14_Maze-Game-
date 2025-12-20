@@ -46,13 +46,11 @@ public class MazePanel extends JPanel {
         drawBackgroundPattern(g2d);
 
         Cell[][] grid = maze.getGrid();
-
         for (int i = 0; i < maze.getRows(); i++) {
             for (int j = 0; j < maze.getCols(); j++) {
                 Cell cell = grid[i][j];
                 int x = j * CELL_SIZE;
                 int y = i * CELL_SIZE;
-
                 drawCell(g2d, cell, x, y);
             }
         }
@@ -84,7 +82,6 @@ public class MazePanel extends JPanel {
 
     private void drawCornerAccent(Graphics2D g2d, int x, int y, boolean isLeft) {
         g2d.setColor(new Color(106, 168, 79, 30));
-
         int size = 80;
         int sign = isLeft ? 1 : -1;
 
@@ -138,8 +135,8 @@ public class MazePanel extends JPanel {
 
         if (!cell.isWall()) {
             g2d.setColor(new Color(0, 0, 0, 30));
-            g2d.fill(new RoundRectangle2D.Float(x + 2, y + 2, CELL_SIZE - 2, CELL_SIZE - 2, CORNER_RADIUS,
-                    CORNER_RADIUS));
+            g2d.fill(new RoundRectangle2D.Float(x + 2, y + 2, CELL_SIZE - 2,
+                    CELL_SIZE - 2, CORNER_RADIUS, CORNER_RADIUS));
         }
 
         g2d.setColor(cellColor);
@@ -148,7 +145,8 @@ public class MazePanel extends JPanel {
         if (!cell.isWall()) {
             g2d.setColor(cell.getType().getDarkerColor());
             g2d.setStroke(new BasicStroke(1.5f));
-            g2d.draw(new RoundRectangle2D.Float(x, y, CELL_SIZE - 1, CELL_SIZE - 1, CORNER_RADIUS, CORNER_RADIUS));
+            g2d.draw(new RoundRectangle2D.Float(x, y, CELL_SIZE - 1, CELL_SIZE - 1,
+                    CORNER_RADIUS, CORNER_RADIUS));
         }
 
         if (drawIcon) {
@@ -192,6 +190,7 @@ public class MazePanel extends JPanel {
         if (fadeTimer != null && fadeTimer.isRunning()) { // ⭐ Stop fade timer juga
             fadeTimer.stop();
         }
+
         maze.generateMaze();
         currentPath = null;
         animationStep = 0;
@@ -268,7 +267,6 @@ public class MazePanel extends JPanel {
 
     public void showPath(PathResult result) {
         clearPath();
-
         if (result.getPath() != null) {
             currentPath = result.getPath();
             for (Cell cell : currentPath) {
@@ -277,7 +275,6 @@ public class MazePanel extends JPanel {
                 }
             }
         }
-
         repaint();
     }
 

@@ -1,5 +1,9 @@
 import javax.swing.*;
 
+
+/**
+ * SESI 1: BASE - Main Class
+ */
 public class Main {
     public static void main(String[] args) {
         try {
@@ -7,6 +11,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         SwingUtilities.invokeLater(() -> {
             GameFrame frame = new GameFrame();
