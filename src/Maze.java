@@ -1,5 +1,10 @@
 import java.util.*;
 
+/**
+ * Maze Class - Class untuk generate dan manage maze
+ * Menggunakan algoritma DFS untuk membuat labirin
+ * UPDATED: Random start & end positions setiap generate!
+ */
 public class Maze {
     private int rows;
     private int cols;
@@ -24,14 +29,17 @@ public class Maze {
         }
     }
 
+    // ⭐⭐⭐ METHOD INI YANG BERUBAH TOTAL ⭐⭐⭐
     public void generateMaze() {
-        // Reset semua cell
+        // Reset semua cell jadi tembok
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 grid[i][j].setWall(true);
                 grid[i][j].setPath(false);
-                grid[i][j].setExploring(false); // ✨ BARU!
-                grid[i][j].setVisitOrder(-1); // ✨ BARU!
+                grid[i][j].setExploring(false);
+                grid[i][j].setVisitOrder(-1);
+                grid[i][j].setStart(false);  // ⭐ TAMBAHAN: Reset start flag
+                grid[i][j].setEnd(false);    // ⭐ TAMBAHAN: Reset end flag
             }
         }
 
@@ -49,7 +57,8 @@ public class Maze {
             List<Cell> unvisitedNeighbors = getUnvisitedNeighbors(current);
 
             if (!unvisitedNeighbors.isEmpty()) {
-                Cell next = unvisitedNeighbors.get(random.nextInt(unvisitedNeighbors.size()));
+                Cell next = unvisitedNeighbors.get(
+                        random.nextInt(unvisitedNeighbors.size()));
                 removeWallBetween(current, next);
                 next.setWall(false);
                 stack.push(next);
@@ -58,21 +67,55 @@ public class Maze {
             }
         }
 
-        // Set posisi start dan end
-        start = grid[1][1];
-        end = grid[rows - 2][cols - 2];
-        start.setStart(true);
-        start.setWall(false);
-        end.setEnd(true);
-        end.setWall(false);
+        // ⭐⭐⭐ BAGIAN BARU: Random start and end positions! ⭐⭐⭐
+        List<Cell> availableCells = new ArrayList<>();
+        for (int i = 1; i < rows - 1; i++) {
+            for (int j = 1; j < cols - 1; j++) {
+                if (!grid[i][j].isWall()) {
+                    availableCells.add(grid[i][j]);
+                }
+            }
+        }
 
-        // Assign random terrain types
+        // Pick random start
+        if (!availableCells.isEmpty()) {
+            start = availableCells.get(random.nextInt(availableCells.size()));
+            start.setStart(true);
+            start.setWall(false);
+            availableCells.remove(start);
+        }
+
+        // Pick random end (far from start for better challenge)
+        if (!availableCells.isEmpty()) {
+            Cell farthestCell = null;
+            int maxDistance = 0;
+
+            // Sample beberapa cell dan pilih yang paling jauh
+            int samplesToCheck = Math.min(20, availableCells.size());
+            for (int i = 0; i < samplesToCheck; i++) {
+                Cell candidate = availableCells.get(
+                        random.nextInt(availableCells.size()));
+                int distance = Math.abs(candidate.getRow() - start.getRow()) +
+                        Math.abs(candidate.getCol() - start.getCol());
+
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                    farthestCell = candidate;
+                }
+            }
+
+            end = farthestCell;
+            end.setEnd(true);
+            end.setWall(false);
+        }
+        // ⭐⭐⭐ AKHIR BAGIAN BARU ⭐⭐⭐
+
         assignTerrainTypes();
     }
 
     private List<Cell> getUnvisitedNeighbors(Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
-        int[][] directions = { { -2, 0 }, { 2, 0 }, { 0, -2 }, { 0, 2 } };
+        int[][] directions = {{-2, 0}, {2, 0}, {0, -2}, {0, 2}};
 
         for (int[] dir : directions) {
             int newRow = cell.getRow() + dir[0];
@@ -94,8 +137,10 @@ public class Maze {
     private void assignTerrainTypes() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (!grid[i][j].isWall() && !grid[i][j].isStart() && !grid[i][j].isEnd()) {
+                if (!grid[i][j].isWall() &&
+                        !grid[i][j].isStart() && !grid[i][j].isEnd()) {
                     double rand = random.nextDouble();
+
                     if (rand < 0.4) {
                         grid[i][j].setType(CellType.EMPTY);
                     } else if (rand < 0.7) {
@@ -116,7 +161,7 @@ public class Maze {
 
     public List<Cell> getNeighbors(Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
-        int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
         for (int[] dir : directions) {
             int newRow = cell.getRow() + dir[0];
@@ -130,7 +175,6 @@ public class Maze {
         return neighbors;
     }
 
-    // Getters
     public int getRows() {
         return rows;
     }
