@@ -186,6 +186,11 @@ public class MazePanel extends JPanel {
      * Show path dengan animasi smooth
      */
     public void showPathWithAnimation(PathResult result) {
+        // 🔊 START finding path sound (loop)
+        if (!SoundManager.isSoundPlaying("findingpath")) {
+            SoundManager.playSoundLoop("findingpath.wav");
+        }
+
         // Stop previous animation
         if (animationTimer != null && animationTimer.isRunning()) {
             animationTimer.stop();
@@ -202,7 +207,7 @@ public class MazePanel extends JPanel {
         animationStep = 0;
 
         // Animate path drawing
-        animationTimer = new Timer(30, e -> {
+        animationTimer = new Timer(90, e -> {
             animationStep++;
 
             if (animationStep < currentPath.size()) {
@@ -213,6 +218,8 @@ public class MazePanel extends JPanel {
                 repaint();
             } else {
                 ((Timer) e.getSource()).stop();
+                // 🔇 STOP finding path sound
+                SoundManager.stopSound("findingpath");
             }
         });
         animationTimer.start();

@@ -1,6 +1,3 @@
-/**
- * SESI 3: + UI/UX - Cell Class
- */
 public class Cell {
     private int row;
     private int col;
@@ -9,8 +6,8 @@ public class Cell {
     private boolean isStart;
     private boolean isEnd;
     private boolean isPath;
-    private boolean isExploring; // ✨ BARU untuk animasi
-    private int visitOrder; // ✨ BARU untuk tracking
+    private boolean isExploring;
+    private int visitOrder;
 
     public Cell(int row, int col) {
         this.row = row;
@@ -25,6 +22,7 @@ public class Cell {
     }
 
     // ========== GETTER METHODS ==========
+
     public int getRow() {
         return row;
     }
@@ -62,6 +60,7 @@ public class Cell {
     }
 
     // ========== SETTER METHODS ==========
+
     public void setType(CellType type) {
         this.type = type;
     }

@@ -25,19 +25,20 @@ public class Maze {
     }
 
     public void generateMaze() {
-        // Reset semua cell
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 grid[i][j].setWall(true);
                 grid[i][j].setPath(false);
-                grid[i][j].setExploring(false); // ✨ BARU!
-                grid[i][j].setVisitOrder(-1); // ✨ BARU!
+                grid[i][j].setExploring(false);
+                grid[i][j].setVisitOrder(-1);
+                grid[i][j].setStart(false);
+                grid[i][j].setEnd(false);
             }
         }
 
-        // Mulai dari posisi (1,1)
         int startRow = 1;
         int startCol = 1;
+
         Stack<Cell> stack = new Stack<>();
         Cell current = grid[startRow][startCol];
         current.setWall(false);
@@ -58,15 +59,46 @@ public class Maze {
             }
         }
 
-        // Set posisi start dan end
-        start = grid[1][1];
-        end = grid[rows - 2][cols - 2];
-        start.setStart(true);
-        start.setWall(false);
-        end.setEnd(true);
-        end.setWall(false);
+        // Random start and end positions!
+        List<Cell> availableCells = new ArrayList<>();
+        for (int i = 1; i < rows - 1; i++) {
+            for (int j = 1; j < cols - 1; j++) {
+                if (!grid[i][j].isWall()) {
+                    availableCells.add(grid[i][j]);
+                }
+            }
+        }
 
-        // Assign random terrain types
+        // Pick random start
+        if (!availableCells.isEmpty()) {
+            start = availableCells.get(random.nextInt(availableCells.size()));
+            start.setStart(true);
+            start.setWall(false);
+            availableCells.remove(start);
+        }
+
+        // Pick random end (far from start for better challenge)
+        if (!availableCells.isEmpty()) {
+            Cell farthestCell = null;
+            int maxDistance = 0;
+
+            int samplesToCheck = Math.min(20, availableCells.size());
+            for (int i = 0; i < samplesToCheck; i++) {
+                Cell candidate = availableCells.get(random.nextInt(availableCells.size()));
+                int distance = Math.abs(candidate.getRow() - start.getRow()) +
+                        Math.abs(candidate.getCol() - start.getCol());
+
+                if (distance > maxDistance) {
+                    maxDistance = distance;
+                    farthestCell = candidate;
+                }
+            }
+
+            end = farthestCell;
+            end.setEnd(true);
+            end.setWall(false);
+        }
+
         assignTerrainTypes();
     }
 
@@ -96,6 +128,7 @@ public class Maze {
             for (int j = 0; j < cols; j++) {
                 if (!grid[i][j].isWall() && !grid[i][j].isStart() && !grid[i][j].isEnd()) {
                     double rand = random.nextDouble();
+
                     if (rand < 0.4) {
                         grid[i][j].setType(CellType.EMPTY);
                     } else if (rand < 0.7) {
@@ -130,7 +163,6 @@ public class Maze {
         return neighbors;
     }
 
-    // Getters
     public int getRows() {
         return rows;
     }
@@ -154,4 +186,5 @@ public class Maze {
     public Cell getCell(int row, int col) {
         return grid[row][col];
     }
+
 }

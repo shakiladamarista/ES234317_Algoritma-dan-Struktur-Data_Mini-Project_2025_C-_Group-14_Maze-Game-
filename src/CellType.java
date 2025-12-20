@@ -1,15 +1,11 @@
 import java.awt.Color;
 
-/**
- * SESI 3: + UI/UX - CellType (FINAL!)
- * Modern nature-inspired color palette
- */
 public enum CellType {
-    // Palet warna forest/nature yang harmonis
-    EMPTY(0, new Color(245, 247, 242), "Clear Path"), // Off-white
-    GRASS(1, new Color(106, 168, 79), "Grass"), // Forest green
-    DIRT(5, new Color(180, 142, 91), "Dirt Path"), // Warm brown
-    WATER(10, new Color(61, 133, 198), "Water"); // River blue
+
+    EMPTY(0, new Color(245, 247, 242), "Clear Path"),
+    GRASS(1, new Color(106, 168, 79), "Grass"),
+    DIRT(5, new Color(180, 142, 91), "Dirt Path"),
+    WATER(10, new Color(61, 133, 198), "Water");
 
     private final int cost;
     private final Color color;
@@ -33,9 +29,6 @@ public enum CellType {
         return name;
     }
 
-    /**
-     * Mendapatkan warna yang sedikit lebih gelap (untuk border/shadow)
-     */
     public Color getDarkerColor() {
         return new Color(
                 Math.max(0, color.getRed() - 30),
