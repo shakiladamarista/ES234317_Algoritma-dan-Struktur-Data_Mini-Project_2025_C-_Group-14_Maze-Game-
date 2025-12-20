@@ -54,7 +54,8 @@ public class ImagePanel extends JPanel {
         // Dark forest gradient
         GradientPaint gradient = new GradientPaint(
                 0, 0, new Color(25, 40, 42),
-                0, getHeight(), new Color(18, 28, 32));
+                0, getHeight(), new Color(18, 28, 32)
+        );
         g2d.setPaint(gradient);
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
@@ -62,16 +63,16 @@ public class ImagePanel extends JPanel {
         g2d.setColor(new Color(15, 25, 28, 100));
         for (int i = 0; i < getWidth(); i += 150) {
             // Tree shape
-            int[] xPoints = { i + 50, i + 30, i + 70 };
-            int[] yPoints = { 0, getHeight(), getHeight() };
+            int[] xPoints = {i + 50, i + 30, i + 70};
+            int[] yPoints = {0, getHeight(), getHeight()};
             g2d.fillPolygon(xPoints, yPoints, 3);
         }
 
         // Stars/particles
         g2d.setColor(new Color(255, 255, 255, 30));
         for (int i = 0; i < 50; i++) {
-            int x = (int) (Math.random() * getWidth());
-            int y = (int) (Math.random() * getHeight());
+            int x = (int)(Math.random() * getWidth());
+            int y = (int)(Math.random() * getHeight());
             g2d.fillOval(x, y, 2, 2);
         }
     }

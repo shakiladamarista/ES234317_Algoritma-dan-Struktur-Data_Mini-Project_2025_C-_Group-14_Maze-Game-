@@ -57,7 +57,8 @@ public class ControlPanel extends JPanel {
                                 " Start: (" + maze.getStart().getRow() + ", " + maze.getStart().getCol() + ")\n" +
                                 " End: (" + maze.getEnd().getRow() + ", " + maze.getEnd().getCol() + ")\n" +
                                 " Distance: " + distance + " units\n\n" +
-                                " Select algorithm to find path...\n");
+                                " Select algorithm to find path...\n"
+                );
             }
 
             allResults.clear();
@@ -105,15 +106,16 @@ public class ControlPanel extends JPanel {
         panel.setBackground(BG_SECONDARY);
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(70, 85, 90), 2),
-                new EmptyBorder(15, 15, 15, 15)));
+                new EmptyBorder(15, 15, 15, 15)
+        ));
 
         JLabel label = new JLabel("Select Algorithm:");
         label.setFont(new Font("Segoe UI", Font.BOLD, 13));
         label.setForeground(TEXT_PRIMARY);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        String[] algorithms = { "BFS - Breadth First Search", "DFS - Depth First Search",
-                "Dijkstra - Shortest Path", "A* - Optimal Pathfinding" };
+        String[] algorithms = {"BFS - Breadth First Search", "DFS - Depth First Search",
+                "Dijkstra - Shortest Path", "A* - Optimal Pathfinding"};
         algorithmSelector = new JComboBox<>(algorithms);
         algorithmSelector.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         algorithmSelector.setBackground(Color.WHITE);
@@ -121,7 +123,8 @@ public class ControlPanel extends JPanel {
 
         algorithmSelector.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(180, 190, 195), 1),
-                new EmptyBorder(5, 10, 5, 10)));
+                new EmptyBorder(5, 10, 5, 10)
+        ));
 
         algorithmSelector.setMaximumSize(new Dimension(310, 40));
         algorithmSelector.setPreferredSize(new Dimension(310, 40));
@@ -130,7 +133,7 @@ public class ControlPanel extends JPanel {
         algorithmSelector.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value,
-                    int index, boolean isSelected, boolean cellHasFocus) {
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
                 JLabel label = (JLabel) super.getListCellRendererComponent(
                         list, value, index, isSelected, cellHasFocus);
                 label.setBorder(new EmptyBorder(8, 12, 8, 12));
@@ -155,9 +158,6 @@ public class ControlPanel extends JPanel {
         return panel;
     }
 
-    /**
-     * ✅ FIXED: Sound hanya main pas button DIKLIK, bukan pas dibuat!
-     */
     private JPanel createActionButtonsPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -168,7 +168,7 @@ public class ControlPanel extends JPanel {
         runBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         runBtn.addActionListener(e -> {
-            SoundManager.playSound("click.wav"); //
+            SoundManager.playSound("click.wav");  //
             runSelectedAlgorithm();
         });
 
@@ -178,7 +178,7 @@ public class ControlPanel extends JPanel {
         compareBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         compareBtn.addActionListener(e -> {
-            SoundManager.playSound("click.wav"); // ✅ DI SINI!
+            SoundManager.playSound("click.wav");  // ✅ DI SINI!
             compareAllAlgorithms();
         });
 
@@ -247,7 +247,8 @@ public class ControlPanel extends JPanel {
         panel.setBackground(BG_SECONDARY);
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(70, 85, 90), 2),
-                new EmptyBorder(12, 12, 12, 12)));
+                new EmptyBorder(12, 12, 12, 12)
+        ));
 
         JLabel title = new JLabel("Legend");
         title.setFont(new Font("Segoe UI", Font.BOLD, 13));
@@ -315,7 +316,7 @@ public class ControlPanel extends JPanel {
 
     private void runSelectedAlgorithm() {
         int selectedIndex = algorithmSelector.getSelectedIndex();
-        String[] algorithmNames = { "BFS", "DFS", "Dijkstra", "A*" };
+        String[] algorithmNames = {"BFS", "DFS", "Dijkstra", "A*"};
         runAlgorithm(algorithmNames[selectedIndex]);
     }
 

@@ -9,8 +9,8 @@ public class Main {
         }
 
         SwingUtilities.invokeLater(() -> {
-            WelcomeScreen welcome = new WelcomeScreen();
-            welcome.setVisible(true);
+            WelcomeScreen welcomeScreen = new WelcomeScreen();
+            welcomeScreen.setVisible(true);
         });
     }
 }

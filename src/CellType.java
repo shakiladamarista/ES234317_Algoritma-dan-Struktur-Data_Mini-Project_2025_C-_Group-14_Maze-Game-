@@ -33,6 +33,7 @@ public enum CellType {
         return new Color(
                 Math.max(0, color.getRed() - 30),
                 Math.max(0, color.getGreen() - 30),
-                Math.max(0, color.getBlue() - 30));
+                Math.max(0, color.getBlue() - 30)
+        );
     }
 }

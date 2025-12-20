@@ -3,13 +3,6 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * WelcomeScreen - Beautiful welcome screen
- * Better fonts (Verdana + Arial Black for modern look)
- * Compact terrain box (not too wide!)
- * Perfect alignment
- */
-
 public class WelcomeScreen extends JFrame {
 
     // Color palette
@@ -44,9 +37,6 @@ public class WelcomeScreen extends JFrame {
         });
     }
 
-    /**
-     * Header panel - Modern bold fonts
-     */
     private JPanel createHeaderPanel() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -72,9 +62,6 @@ public class WelcomeScreen extends JFrame {
         return panel;
     }
 
-    /**
-     * Instruction panel - Compact terrain box
-     */
     private JPanel createInstructionPanel() {
         JPanel outerPanel = new JPanel();
         outerPanel.setOpaque(false);
@@ -96,7 +83,7 @@ public class WelcomeScreen extends JFrame {
                 // Border
                 g2d.setColor(new Color(106, 168, 79, 140));
                 g2d.setStroke(new BasicStroke(2.5f));
-                g2d.drawRoundRect(1, 1, getWidth() - 3, getHeight() - 3, 20, 20);
+                g2d.drawRoundRect(1, 1, getWidth()-3, getHeight()-3, 20, 20);
             }
         };
         container.setOpaque(false);
@@ -157,9 +144,6 @@ public class WelcomeScreen extends JFrame {
         return outerPanel;
     }
 
-    /**
-     * Create instruction label - Verdana for readability
-     */
     private JLabel createInstructionLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -168,9 +152,6 @@ public class WelcomeScreen extends JFrame {
         return label;
     }
 
-    /**
-     * ⭐ COMPACT TERRAIN COSTS BOX - Width fits content!
-     */
     private JPanel createTerrainCostsBox() {
         JPanel boxPanel = new JPanel() {
             @Override
@@ -186,14 +167,13 @@ public class WelcomeScreen extends JFrame {
                 // Border
                 g2d.setColor(new Color(80, 100, 105, 180));
                 g2d.setStroke(new BasicStroke(1.5f));
-                g2d.drawRoundRect(1, 1, getWidth() - 3, getHeight() - 3, 12, 12);
+                g2d.drawRoundRect(1, 1, getWidth()-3, getHeight()-3, 12, 12);
             }
         };
         boxPanel.setOpaque(false);
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         boxPanel.setBorder(new EmptyBorder(12, 20, 12, 20));
 
-        // ⭐ TIDAK SET MaximumSize - biar otomatis fit content!
         boxPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Add terrain items
@@ -208,9 +188,6 @@ public class WelcomeScreen extends JFrame {
         return boxPanel;
     }
 
-    /**
-     * Create terrain cost item - Compact
-     */
     private JPanel createTerrainItem(String text, Color color) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         panel.setOpaque(false);
@@ -234,7 +211,7 @@ public class WelcomeScreen extends JFrame {
                 // Border
                 g2d.setColor(color.darker());
                 g2d.setStroke(new BasicStroke(2f));
-                g2d.drawRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 5, 5);
+                g2d.drawRoundRect(1, 1, getWidth()-2, getHeight()-2, 5, 5);
             }
         };
         colorBox.setPreferredSize(new Dimension(20, 20));
@@ -251,9 +228,6 @@ public class WelcomeScreen extends JFrame {
         return panel;
     }
 
-    /**
-     * Button panel - Bold font
-     */
     private JPanel createButtonPanel() {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
@@ -272,9 +246,6 @@ public class WelcomeScreen extends JFrame {
         return panel;
     }
 
-    /**
-     * Create modern styled button
-     */
     private JButton createModernButton(String text, Color bgColor) {
         JButton button = new JButton(text) {
             @Override
@@ -286,27 +257,29 @@ public class WelcomeScreen extends JFrame {
                         RenderingHints.VALUE_RENDER_QUALITY);
 
                 // Button color with hover
-                Color btnColor = getModel().isRollover() ? brighten(bgColor) : bgColor;
+                Color btnColor = getModel().isRollover() ?
+                        brighten(bgColor) : bgColor;
 
                 // Shadow
                 g2d.setColor(new Color(0, 0, 0, 100));
-                g2d.fillRoundRect(4, 4, getWidth() - 4, getHeight() - 4, 14, 14);
+                g2d.fillRoundRect(4, 4, getWidth()-4, getHeight()-4, 14, 14);
 
                 // Button background
                 g2d.setColor(btnColor);
-                g2d.fillRoundRect(0, 0, getWidth() - 4, getHeight() - 4, 14, 14);
+                g2d.fillRoundRect(0, 0, getWidth()-4, getHeight()-4, 14, 14);
 
                 // Glossy highlight
                 GradientPaint highlight = new GradientPaint(
                         0, 0, new Color(255, 255, 255, 60),
-                        0, getHeight() / 2, new Color(255, 255, 255, 0));
+                        0, getHeight()/2, new Color(255, 255, 255, 0)
+                );
                 g2d.setPaint(highlight);
-                g2d.fillRoundRect(0, 0, getWidth() - 4, getHeight() / 2 - 2, 14, 14);
+                g2d.fillRoundRect(0, 0, getWidth()-4, getHeight()/2-2, 14, 14);
 
                 // Border
                 g2d.setColor(btnColor.darker().darker());
                 g2d.setStroke(new BasicStroke(2.5f));
-                g2d.drawRoundRect(1, 1, getWidth() - 6, getHeight() - 6, 14, 14);
+                g2d.drawRoundRect(1, 1, getWidth()-6, getHeight()-6, 14, 14);
 
                 // Text
                 g2d.setColor(getForeground());
@@ -337,9 +310,6 @@ public class WelcomeScreen extends JFrame {
         return button;
     }
 
-    /**
-     * Brighten color untuk hover effect
-     */
     private Color brighten(Color color) {
         int r = Math.min(255, color.getRed() + 35);
         int g = Math.min(255, color.getGreen() + 35);
@@ -347,9 +317,6 @@ public class WelcomeScreen extends JFrame {
         return new Color(r, g, b);
     }
 
-    /**
-     * Start the main game
-     */
     private void startGame() {
         this.dispose();
 

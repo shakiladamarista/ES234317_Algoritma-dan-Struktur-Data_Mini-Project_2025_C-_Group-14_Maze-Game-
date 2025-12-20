@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
                 g2d.setColor(new Color(255, 255, 255, 5));
                 for (int i = 0; i < getWidth(); i += 20) {
                     for (int j = 0; j < getHeight(); j += 20) {
-                        if ((i / 20 + j / 20) % 2 == 0) {
+                        if ((i/20 + j/20) % 2 == 0) {
                             g2d.fillRect(i, j, 2, 2);
                         }
                     }
@@ -35,8 +35,8 @@ public class GameFrame extends JFrame {
 
                 g2d.setColor(new Color(106, 168, 79, 20));
                 g2d.setStroke(new BasicStroke(2));
-                g2d.drawLine(0, getHeight() / 3, getWidth(), getHeight() / 3);
-                g2d.drawLine(0, 2 * getHeight() / 3, getWidth(), 2 * getHeight() / 3);
+                g2d.drawLine(0, getHeight()/3, getWidth(), getHeight()/3);
+                g2d.drawLine(0, 2*getHeight()/3, getWidth(), 2*getHeight()/3);
             }
         };
         contentPanel.setBackground(BG_DARK);
@@ -79,14 +79,15 @@ public class GameFrame extends JFrame {
 
                 GradientPaint gp1 = new GradientPaint(
                         0, 0, new Color(52, 67, 73),
-                        0, getHeight(), new Color(42, 54, 59));
+                        0, getHeight(), new Color(42, 54, 59)
+                );
                 g2d.setPaint(gp1);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
 
                 g2d.setColor(new Color(106, 168, 79, 30));
                 for (int i = 0; i < getWidth(); i += 60) {
-                    int[] xPoints = { i, i + 30, i + 60 };
-                    int[] yPoints = { getHeight(), 0, getHeight() };
+                    int[] xPoints = {i, i + 30, i + 60};
+                    int[] yPoints = {getHeight(), 0, getHeight()};
                     g2d.fillPolygon(xPoints, yPoints, 3);
                 }
 

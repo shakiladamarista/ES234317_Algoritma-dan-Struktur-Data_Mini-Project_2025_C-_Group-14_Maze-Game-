@@ -2,9 +2,7 @@ import java.util.*;
 
 public class PathFinder {
 
-    /**
-     * BFS - Breadth First Search
-     */
+    //BPS
     public static PathResult findPathBFS(Maze maze) {
         long startTime = System.nanoTime();
 
@@ -42,9 +40,7 @@ public class PathFinder {
         return new PathResult(null, -1, executionTime, "BFS");
     }
 
-    /**
-     * DFS - Depth First Search
-     */
+    //DFS
     public static PathResult findPathDFS(Maze maze) {
         long startTime = System.nanoTime();
 
@@ -82,9 +78,7 @@ public class PathFinder {
         return new PathResult(null, -1, executionTime, "DFS");
     }
 
-    /**
-     * Dijkstra - Shortest path by COST
-     */
+    //Dijikstra
     public static PathResult findPathDijkstra(Maze maze) {
         long startTime = System.nanoTime();
 
@@ -96,6 +90,7 @@ public class PathFinder {
         Cell start = maze.getStart();
         Cell end = maze.getEnd();
 
+        // Initialize
         for (int i = 0; i < maze.getRows(); i++) {
             for (int j = 0; j < maze.getCols(); j++) {
                 distances.put(maze.getCell(i, j), Integer.MAX_VALUE);
@@ -110,8 +105,7 @@ public class PathFinder {
             Node currentNode = pq.poll();
             Cell current = currentNode.cell;
 
-            if (visited.contains(current))
-                continue;
+            if (visited.contains(current)) continue;
             visited.add(current);
 
             if (current.equals(end)) {
@@ -138,9 +132,7 @@ public class PathFinder {
         return new PathResult(null, -1, executionTime, "Dijkstra");
     }
 
-    /**
-     * A* - Optimal with heuristic
-     */
+    //A*
     public static PathResult findPathAStar(Maze maze) {
         long startTime = System.nanoTime();
 
@@ -152,6 +144,7 @@ public class PathFinder {
         Cell start = maze.getStart();
         Cell end = maze.getEnd();
 
+        // Initialize
         for (int i = 0; i < maze.getRows(); i++) {
             for (int j = 0; j < maze.getCols(); j++) {
                 gScore.put(maze.getCell(i, j), Integer.MAX_VALUE);
@@ -167,8 +160,7 @@ public class PathFinder {
             AStarNode currentNode = pq.poll();
             Cell current = currentNode.cell;
 
-            if (visited.contains(current))
-                continue;
+            if (visited.contains(current)) continue;
             visited.add(current);
 
             if (current.equals(end)) {
@@ -233,8 +225,8 @@ public class PathFinder {
 
     private static class AStarNode {
         Cell cell;
-        int gScore;
-        int fScore;
+        int gScore;  // Cost dari start ke current
+        int fScore;  // gScore + heuristic
 
         AStarNode(Cell cell, int gScore, int fScore) {
             this.cell = cell;
@@ -243,3 +235,4 @@ public class PathFinder {
         }
     }
 }
+

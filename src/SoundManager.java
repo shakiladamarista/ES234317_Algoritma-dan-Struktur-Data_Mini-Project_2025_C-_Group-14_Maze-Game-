@@ -1,10 +1,9 @@
 import javax.sound.sampled.*;
-import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SoundManager {
-
     private static Map<String, Clip> activeClips = new HashMap<>();
 
     public static void playBGM(String fileName) {
@@ -17,9 +16,11 @@ public class SoundManager {
             clip.start();
 
             activeClips.put("bgm", clip);
+
             System.out.println("🎵 BGM playing...");
         } catch (Exception e) {
             System.err.println("❌ Error playing BGM: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -27,7 +28,6 @@ public class SoundManager {
         try {
             String key = fileName.replace(".wav", "");
             stopSound(key);
-
             Clip clip = loadAudio(fileName);
 
             if (fileName.equals("click.wav")) {
@@ -35,7 +35,7 @@ public class SoundManager {
             } else if (fileName.equals("findingpath.wav")) {
                 setVolume(clip, -15.0f);
             } else {
-                setVolume(clip, -12.0f);
+                setVolume(clip, -12.0f); 
             }
 
             clip.start();
@@ -43,29 +43,41 @@ public class SoundManager {
 
         } catch (Exception e) {
             System.err.println("❌ Error playing sound: " + fileName);
+            e.printStackTrace();
         }
     }
 
     public static void playSoundLoop(String fileName) {
         try {
             String key = fileName.replace(".wav", "");
-            stopSound(key);
 
+            stopSound(key);
             Clip clip = loadAudio(fileName);
-            setVolume(clip, -15.0f);
+
+            if (fileName.equals("findingpath.wav")) {
+                setVolume(clip, -15.0f);
+            } else {
+                setVolume(clip, -12.0f);
+            }
+
             clip.loop(Clip.LOOP_CONTINUOUSLY);
 
             activeClips.put(key, clip);
+
             System.out.println("🔊 " + fileName + " looping...");
+
         } catch (Exception e) {
-            System.err.println("❌ Error looping sound: " + fileName);
+            System.err.println("❌ Error playing looped sound: " + fileName);
+            e.printStackTrace();
         }
     }
 
     public static void stopSound(String key) {
         Clip clip = activeClips.get(key);
         if (clip != null) {
-            clip.stop();
+            if (clip.isRunning()) {
+                clip.stop();
+            }
             clip.close();
             activeClips.remove(key);
         }
@@ -77,12 +89,12 @@ public class SoundManager {
     }
 
     private static Clip loadAudio(String fileName) throws Exception {
-        File file = new File("sounds/" + fileName);
-        if (!file.exists()) {
-            throw new RuntimeException("File not found: " + file.getAbsolutePath());
+        InputStream audioSrc = SoundManager.class.getResourceAsStream("/" + fileName);
+        if (audioSrc == null) {
+            throw new RuntimeException("File not found: " + fileName);
         }
-
-        AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+        InputStream bufferedIn = new java.io.BufferedInputStream(audioSrc);
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(bufferedIn);
         Clip clip = AudioSystem.getClip();
         clip.open(audioIn);
         return clip;
@@ -90,18 +102,26 @@ public class SoundManager {
 
     private static void setVolume(Clip clip, float decibels) {
         try {
-            FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            float min = gain.getMinimum();
-            float max = gain.getMaximum();
-            gain.setValue(Math.max(min, Math.min(max, decibels)));
-        } catch (Exception ignored) {
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+            float min = gainControl.getMinimum();
+            float max = gainControl.getMaximum();
+            float clampedValue = Math.max(min, Math.min(max, decibels));
+
+            gainControl.setValue(clampedValue);
+        } catch (Exception e) {
+            System.err.println("⚠️ Cannot set volume: " + e.getMessage());
         }
     }
 
     public static void cleanup() {
         for (Clip clip : activeClips.values()) {
-            clip.stop();
-            clip.close();
+            if (clip != null) {
+                if (clip.isRunning()) {
+                    clip.stop();
+                }
+                clip.close();
+            }
         }
         activeClips.clear();
         System.out.println("🔇 All sounds cleaned up");

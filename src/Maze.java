@@ -104,7 +104,7 @@ public class Maze {
 
     private List<Cell> getUnvisitedNeighbors(Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
-        int[][] directions = { { -2, 0 }, { 2, 0 }, { 0, -2 }, { 0, 2 } };
+        int[][] directions = {{-2, 0}, {2, 0}, {0, -2}, {0, 2}};
 
         for (int[] dir : directions) {
             int newRow = cell.getRow() + dir[0];
@@ -149,7 +149,7 @@ public class Maze {
 
     public List<Cell> getNeighbors(Cell cell) {
         List<Cell> neighbors = new ArrayList<>();
-        int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
         for (int[] dir : directions) {
             int newRow = cell.getRow() + dir[0];
@@ -186,5 +186,5 @@ public class Maze {
     public Cell getCell(int row, int col) {
         return grid[row][col];
     }
-
 }
+
