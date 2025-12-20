@@ -1,10 +1,10 @@
 import java.awt.Color;
 
 public enum CellType {
-    EMPTY(0, Color.WHITE, "Clear Path"),
-    GRASS(1, Color.GREEN, "Grass"),
-    DIRT(5, Color.ORANGE, "Dirt Path"),
-    WATER(10, Color.BLUE, "Water");
+    EMPTY(0, new Color(245, 247, 242), "Clear Path"),  // Off-white
+    GRASS(1, new Color(106, 168, 79), "Grass"),  // Forest green
+    DIRT(5, new Color(180, 142, 91), "Dirt Path"),  // Warm brown
+    WATER(10, new Color(61, 133, 198), "Water");  // River blue
 
 
     private final int cost;
@@ -19,10 +19,25 @@ public enum CellType {
     }
 
 
-    public int getCost() { return cost; }
-    public Color getColor() { return color; }
-    public String getName() { return name; }
+    public int getCost() {
+        return cost;
+    }
+
+
+    public Color getColor() {
+        return color;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public Color getDarkerColor() {
+        return new Color(
+                Math.max(0, color.getRed() - 30),
+                Math.max(0, color.getGreen() - 30),
+                Math.max(0, color.getBlue() - 30)
+        );
+    }
 }
-
-
-

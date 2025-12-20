@@ -1,10 +1,6 @@
 import java.util.*;
 
 
-/**
- * SESI 1: BASE - Maze Class
- * Generate labirin menggunakan DFS algorithm
- */
 public class Maze {
     private int rows;
     private int cols;
@@ -33,21 +29,27 @@ public class Maze {
 
 
     public void generateMaze() {
-        // Reset semua cell jadi tembok
+        // Reset semua cell
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 grid[i][j].setWall(true);
+                grid[i][j].setPath(false);
+                grid[i][j].setExploring(false);  // ✨ BARU!
+                grid[i][j].setVisitOrder(-1);  // ✨ BARU!
             }
         }
 
 
-        // DFS algorithm untuk carving maze
+        // Mulai dari posisi (1,1)
+        int startRow = 1;
+        int startCol = 1;
         Stack<Cell> stack = new Stack<>();
-        Cell current = grid[1][1];
+        Cell current = grid[startRow][startCol];
         current.setWall(false);
         stack.push(current);
 
 
+        // DFS algorithm untuk carving maze
         while (!stack.isEmpty()) {
             current = stack.peek();
             List<Cell> unvisitedNeighbors = getUnvisitedNeighbors(current);
@@ -64,7 +66,7 @@ public class Maze {
         }
 
 
-        // Set start dan end
+        // Set posisi start dan end
         start = grid[1][1];
         end = grid[rows - 2][cols - 2];
         start.setStart(true);
@@ -73,7 +75,7 @@ public class Maze {
         end.setWall(false);
 
 
-        // Assign random terrain
+        // Assign random terrain types
         assignTerrainTypes();
     }
 
@@ -147,13 +149,33 @@ public class Maze {
     }
 
 
-    public int getRows() { return rows; }
-    public int getCols() { return cols; }
-    public Cell[][] getGrid() { return grid; }
-    public Cell getStart() { return start; }
-    public Cell getEnd() { return end; }
-    public Cell getCell(int row, int col) { return grid[row][col]; }
+    // Getters
+    public int getRows() {
+        return rows;
+    }
+
+
+    public int getCols() {
+        return cols;
+    }
+
+
+    public Cell[][] getGrid() {
+        return grid;
+    }
+
+
+    public Cell getStart() {
+        return start;
+    }
+
+
+    public Cell getEnd() {
+        return end;
+    }
+
+
+    public Cell getCell(int row, int col) {
+        return grid[row][col];
+    }
 }
-
-
-
