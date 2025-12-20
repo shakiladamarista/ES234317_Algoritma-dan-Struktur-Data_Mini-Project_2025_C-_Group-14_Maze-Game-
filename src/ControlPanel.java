@@ -10,6 +10,7 @@ public class ControlPanel extends JPanel {
     private JComboBox<String> algorithmSelector;
     private List<PathResult> allResults;
 
+
     private static final Color BG_PRIMARY = new Color(42, 54, 59);      // Dark slate
     private static final Color BG_SECONDARY = new Color(52, 67, 73);    // Medium slate
     private static final Color ACCENT_GREEN = new Color(106, 168, 79);  // Forest green
@@ -39,13 +40,11 @@ public class ControlPanel extends JPanel {
         panel.setBackground(BG_PRIMARY);
 
 
-        // Title
         JLabel title = new JLabel("Path Finder");
         title.setFont(new Font("Segoe UI", Font.BOLD, 20));
         title.setForeground(ACCENT_GREEN);
 
 
-        // New Maze Button dengan rounded corners
         JButton newMazeBtn = createModernButton("New Maze", ACCENT_GREEN);
         newMazeBtn.setPreferredSize(new Dimension(140, 40));
         newMazeBtn.setMaximumSize(new Dimension(140, 40));
@@ -63,23 +62,21 @@ public class ControlPanel extends JPanel {
         return panel;
     }
 
+
     private JPanel createMainControlsPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(BG_PRIMARY);
 
 
-        // Algorithm Selection Section
         panel.add(createAlgorithmSelectorPanel());
         panel.add(Box.createVerticalStrut(15));
 
 
-        // Action Buttons
         panel.add(createActionButtonsPanel());
         panel.add(Box.createVerticalStrut(15));
 
 
-        // Legend
         panel.add(createLegendPanel());
 
 
@@ -179,7 +176,6 @@ public class ControlPanel extends JPanel {
         return panel;
     }
 
-
     private JPanel createActionButtonsPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -216,7 +212,6 @@ public class ControlPanel extends JPanel {
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
-                // Draw rounded background
                 if (getModel().isRollover()) {
                     g2d.setColor(brighten(bgColor));
                 } else {
@@ -225,7 +220,6 @@ public class ControlPanel extends JPanel {
                 g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 8, 8);
 
 
-                // Draw text
                 g2d.setColor(getForeground());
                 g2d.setFont(getFont());
                 FontMetrics fm = g2d.getFontMetrics();
@@ -253,7 +247,6 @@ public class ControlPanel extends JPanel {
         return button;
     }
 
-
     private JPanel createLegendPanel() {
         JPanel panel = new JPanel() {
             @Override
@@ -262,12 +255,10 @@ public class ControlPanel extends JPanel {
                 Graphics2D g2d = (Graphics2D) g;
 
 
-                // Draw base background
                 g2d.setColor(BG_SECONDARY);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
 
 
-                // Subtle diagonal lines pattern
                 g2d.setColor(new Color(255, 255, 255, 8));
                 for (int i = -getHeight(); i < getWidth(); i += 15) {
                     g2d.drawLine(i, 0, i + getHeight(), getHeight());
@@ -282,7 +273,6 @@ public class ControlPanel extends JPanel {
         ));
 
 
-        // Title
         JLabel title = new JLabel("Legend");
         title.setFont(new Font("Segoe UI", Font.BOLD, 13));
         title.setForeground(TEXT_PRIMARY);
@@ -291,7 +281,6 @@ public class ControlPanel extends JPanel {
         panel.add(Box.createVerticalStrut(10));
 
 
-        // Legend items - lebih compact
         panel.add(createCompactLegendItem("Start", new Color(76, 175, 80)));
         panel.add(createCompactLegendItem("End", new Color(244, 67, 54)));
         panel.add(createCompactLegendItem("Path", new Color(255, 193, 7)));
@@ -368,6 +357,7 @@ public class ControlPanel extends JPanel {
         runAlgorithm(algorithmNames[selectedIndex]);
     }
 
+
     private void runAlgorithm(String algorithm) {
         PathResult result = null;
 
@@ -393,6 +383,7 @@ public class ControlPanel extends JPanel {
             displayResult(result);
         }
     }
+
 
     private void displayResult(PathResult result) {
         StringBuilder sb = new StringBuilder();
@@ -443,6 +434,7 @@ public class ControlPanel extends JPanel {
 
         resultArea.setText(sb.toString());
     }
+
 
     private void compareAllAlgorithms() {
         allResults.clear();
@@ -540,6 +532,7 @@ public class ControlPanel extends JPanel {
 
         resultArea.setText(sb.toString());
     }
+
 
     private Color brighten(Color color) {
         int r = Math.min(255, color.getRed() + 30);

@@ -1,6 +1,7 @@
 import java.awt.Color;
 
 public enum CellType {
+    // Palet warna forest/nature yang harmonis
     EMPTY(0, new Color(245, 247, 242), "Clear Path"),  // Off-white
     GRASS(1, new Color(106, 168, 79), "Grass"),  // Forest green
     DIRT(5, new Color(180, 142, 91), "Dirt Path"),  // Warm brown
@@ -41,3 +42,7 @@ public enum CellType {
         );
     }
 }
+
+
+
+

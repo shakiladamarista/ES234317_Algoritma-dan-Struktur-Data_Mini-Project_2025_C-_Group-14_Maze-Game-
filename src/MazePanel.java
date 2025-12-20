@@ -15,7 +15,6 @@ public class MazePanel extends JPanel {
     private int animationStep = 0;
 
 
-    // Modern color palette
     private static final Color BG_COLOR = new Color(34, 44, 47);
     private static final Color WALL_COLOR = new Color(55, 71, 79);
     private static final Color START_COLOR = new Color(76, 175, 80);
@@ -41,12 +40,10 @@ public class MazePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
 
-        // High quality rendering
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
 
-        // Draw decorative background pattern
         drawBackgroundPattern(g2d);
 
 
@@ -70,7 +67,6 @@ public class MazePanel extends JPanel {
         int height = getHeight();
 
 
-        // Gradient overlay untuk depth
         GradientPaint gradient = new GradientPaint(
                 0, 0, new Color(34, 44, 47),
                 width, height, new Color(42, 54, 59, 200)
@@ -79,7 +75,6 @@ public class MazePanel extends JPanel {
         g2d.fillRect(0, 0, width, height);
 
 
-        // Subtle grid pattern
         g2d.setColor(new Color(255, 255, 255, 8));
         for (int i = 0; i < width; i += 40) {
             g2d.drawLine(i, 0, i, height);
@@ -89,7 +84,6 @@ public class MazePanel extends JPanel {
         }
 
 
-        // Decorative corner accents
         drawCornerAccent(g2d, 0, 0, true);  // Top-left
         drawCornerAccent(g2d, width, 0, false);  // Top-right
         drawCornerAccent(g2d, 0, height, true);  // Bottom-left
@@ -105,15 +99,14 @@ public class MazePanel extends JPanel {
         int sign = isLeft ? 1 : -1;
 
 
-        // Draw circular accent
         g2d.fillOval(x - size/2, y - size/2, size, size);
 
 
-        // Draw smaller accent
         g2d.setColor(new Color(106, 168, 79, 15));
         int size2 = 120;
         g2d.fillOval(x - size2/2 + sign * 20, y - size2/2 + 20, size2, size2);
     }
+
 
     private void drawCell(Graphics2D g2d, Cell cell, int x, int y) {
         Color cellColor;
@@ -148,19 +141,16 @@ public class MazePanel extends JPanel {
         }
 
 
-        // Draw shadow untuk depth
         if (!cell.isWall()) {
             g2d.setColor(new Color(0, 0, 0, 30));
             g2d.fill(new RoundRectangle2D.Float(x + 2, y + 2, CELL_SIZE - 2, CELL_SIZE - 2, CORNER_RADIUS, CORNER_RADIUS));
         }
 
 
-        // Draw main cell dengan rounded corners
         g2d.setColor(cellColor);
         g2d.fill(new RoundRectangle2D.Float(x, y, CELL_SIZE - 1, CELL_SIZE - 1, CORNER_RADIUS, CORNER_RADIUS));
 
 
-        // Draw border
         if (!cell.isWall()) {
             g2d.setColor(cell.getType().getDarkerColor());
             g2d.setStroke(new BasicStroke(1.5f));
@@ -168,7 +158,6 @@ public class MazePanel extends JPanel {
         }
 
 
-        // Draw icon untuk start/end
         if (drawIcon) {
             g2d.setColor(Color.WHITE);
             g2d.setFont(new Font("Segoe UI", Font.BOLD, 12));  // Adjusted for smaller cells

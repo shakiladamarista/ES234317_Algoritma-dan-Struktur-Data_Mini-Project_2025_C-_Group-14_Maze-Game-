@@ -1,10 +1,5 @@
 import java.util.*;
 
-
-/**
- * SESI 2: PathFinder Class (NEW!)
- * Implementasi 4 algoritma pathfinding
- */
 public class PathFinder {
 
 

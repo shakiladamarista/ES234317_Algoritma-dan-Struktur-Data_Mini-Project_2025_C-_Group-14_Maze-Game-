@@ -1,6 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * GameFrame Class - Main window dengan modern design
+ * UPDATED: Clean, minimalist forest theme
+ */
 public class GameFrame extends JFrame {
     private MazePanel mazePanel;
     private ControlPanel controlPanel;
@@ -71,6 +76,9 @@ public class GameFrame extends JFrame {
     }
 
 
+    /**
+     * Header panel dengan gradient effect dan decorative pattern
+     */
     private JPanel createHeaderPanel() {
         JPanel panel = new JPanel() {
             @Override

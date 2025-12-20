@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class Maze {
     private int rows;
     private int cols;

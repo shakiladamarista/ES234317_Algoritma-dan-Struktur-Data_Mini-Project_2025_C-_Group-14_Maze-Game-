@@ -1,10 +1,5 @@
 import java.util.List;
 
-
-/**
- * SESI 2: PathResult Class (NEW!)
- * Wrapper untuk hasil pathfinding
- */
 public class PathResult {
     private List<Cell> path;
     private int totalCost;
