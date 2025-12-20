@@ -8,7 +8,6 @@ public class Main {
             e.printStackTrace();
         }
 
-
         SwingUtilities.invokeLater(() -> {
             GameFrame frame = new GameFrame();
             frame.setVisible(true);

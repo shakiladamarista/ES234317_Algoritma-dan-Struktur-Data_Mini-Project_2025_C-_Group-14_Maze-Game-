@@ -6,7 +6,6 @@ public class PathResult {
     private long executionTime;
     private String algorithmName;
 
-
     public PathResult(List<Cell> path, int totalCost, long executionTime, String algorithmName) {
         this.path = path;
         this.totalCost = totalCost;
@@ -14,17 +13,23 @@ public class PathResult {
         this.algorithmName = algorithmName;
     }
 
+    public List<Cell> getPath() {
+        return path;
+    }
 
-    public List<Cell> getPath() { return path; }
-    public int getTotalCost() { return totalCost; }
-    public long getExecutionTime() { return executionTime; }
-    public String getAlgorithmName() { return algorithmName; }
+    public int getTotalCost() {
+        return totalCost;
+    }
 
+    public long getExecutionTime() {
+        return executionTime;
+    }
+
+    public String getAlgorithmName() {
+        return algorithmName;
+    }
 
     public int getPathLength() {
         return path != null ? path.size() : 0;
     }
 }
-
-
-
